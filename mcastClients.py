@@ -160,7 +160,7 @@ def usage():
 
 # Parse args and overwrite defaults
 def parseArgs(args):
-  global dev, srcIP, numClients, grp, grpCnt, maxTimeout, dhcp
+  global dev, srcIP, numClients, firstGrp, grpCnt, maxTimeout, dhcp
   if len(args) < 2: return
 
   tmp = str(args.pop(1))
@@ -197,7 +197,7 @@ args = []
 random.seed()
 
 parseArgs(sys.argv) # Parse initial args
-sys.setrecursionlimit(grpCnt+10) # Necessary for incIP
+sys.setrecursionlimit(max(sys.getrecursionlimit(),grpCnt+1000)) # Necessary for incIP
 conf.iface = dev # Set our default Scapy interface
 conf.verb = 0 # Disable Scapy verbosity
 conf.checkIPaddr = 0 # Don't check response packets for matching destination IPs
@@ -220,7 +220,7 @@ for x in range(0,numClients):
     seedGrp = incIP(seedGrp)
     ii += 1
   else:
-    seedGrp = grp
+    seedGrp = firstGrp
     ii = 1
     
 # Keep changing our channels until Ctrl-C
