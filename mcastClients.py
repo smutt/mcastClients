@@ -138,7 +138,7 @@ def incMAC(mac):
       macAr.append("0" + x[2])
       return reduce(lambda x,y: x + ":" + y, macAr)
   else:
-    return incMac(macAr) + ':00'
+    return incMAC(macAr) + ':00'
 
 # Converts str MAC to weird pcap DHCP chaddr format
 def macToChaddr(mac):
@@ -160,7 +160,7 @@ def usage():
 
 # Parse args and overwrite defaults
 def parseArgs(args):
-  global dev, srcIP, numClients, firstGrp, grpCnt, maxTimeout, dhcp
+  global dev, firstIP, numClients, firstGrp, grpCnt, maxTimeout, dhcp
   if len(args) < 2: return
 
   tmp = str(args.pop(1))
@@ -168,7 +168,7 @@ def parseArgs(args):
   elif tmp == '-c':
     numClients = int(args.pop(1))
   elif tmp == '-s':
-    srcIP = str(args.pop(1))
+    firstIP = str(args.pop(1))
     dhcp = False
   elif tmp == '-g':
     firstGrp = str(args.pop(1))
